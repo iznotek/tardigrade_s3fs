@@ -8,14 +8,13 @@ docker build . -t tardigrade
 ## Running S3 gateway
 Run the Tardigrade S3 gateway:
 ```
-docker run -it -p 7777:7777 -e API_KEY=TARDIGRADE_API_KEY -e PASSPHRASE=ENCRYPTION_PASSPHRASE tardigrade
+docker run -it -p 7777:7777 -e ACCESS_GRANT=TARDIGRADE_ACCESS_GRANT -e MINIO_ACCESS_KEY=MINIO_ACCESS_KEY -e MINIO_SECRET_KEY=MINIO_SECRET_KEY tardigrade
 ```
-Note down the printed `Access key` and `Secret key`.
 
 ## Accessing gateway
 You can now access the Minio interface at http://localhost:7777/
 
-Login required the `Access key` and `Secret key` from the previous step.
+Login by the `Access key` and `Secret key` provided on the previous step.
 
 The user-interface should now be used to create a bucket, and the name should be noted down.
 
@@ -28,7 +27,7 @@ apt install s3fs
 
 Prepare our credentials file:
 ```
-echo "ACCESS_KEY:SECRET_KEY" > /opt/tardigrade_s3fs_passwd
+echo "MINIO_ACCESS_KEY:MINIO_SECRET_KEY" > /opt/tardigrade_s3fs_passwd
 chmod 600 /opt/tardigrade_s3fs_passwd
 ```
 
