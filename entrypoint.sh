@@ -1,30 +1,23 @@
 #!/bin/sh
 
-SATELLITE_REGION=${SATELLITE_REGION:-EUROPE}
-if [[ "${SATELLITE_REGION}" == "EUROPE" ]]; then
-    SATELLITE_ADDRESS=${SATELLITE_ADDRESS:-europe-west-1.tardigrade.io}
-elif [[ "${SATELLITE_REGION}" == "ASIA" ]]; then
-    SATELLITE_ADDRESS=${SATELLITE_ADDRESS:-asia-east-1.tardigrade.io}
-elif [[ "${SATELLITE_REGION}" == "US" ]]; then
-    SATELLITE_ADDRESS=${SATELLITE_ADDRESS:-us-central-1.tardigrade.io}
-fi
+#gateway setup --advanced --help
 
-if [[ -z "${SATELLITE_ADDRESS}" ]]; then
-    echo "SATELLITE_ADDRESS is not set" 1>&2
+if [[ -z "${ACCESS_GRANT}" ]]; then
+    echo "ACCESS_GRANT is not set" 1>&2
     exit 1
 fi
 
-if [[ -z "${API_KEY}" ]]; then
-    echo "API_KEY is not set" 1>&2
+if [[ -z "${MINIO_ACCESS_KEY}" ]]; then
+    echo "ACCESS_GRANT is not set" 1>&2
     exit 1
 fi
 
-if [[ -z "${PASSPHRASE}" ]]; then
-    echo "PASSPHRASE is not set" 1>&2
+if [[ -z "${MINIO_SECRET_KEY}" ]]; then
+    echo "ACCESS_GRANT is not set" 1>&2
     exit 1
 fi
 
-gateway setup  --non-interactive --satellite-address "${SATELLITE_ADDRESS}" --api-key "${API_KEY}" --passphrase "${PASSPHRASE}"
+gateway setup  --non-interactive --access "${ACCESS_GRANT}" --minio.access-key "${MINIO_ACCESS_KEY}" --minio.secret-key "${MINIO_SECRET_KEY}"
 SETUP_STATUS=$?
 if [[ "${SETUP_STATUS}" -ne 0 ]]; then
     echo "Setup failed!" 1>&2
